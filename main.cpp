@@ -1,3 +1,5 @@
+#include "performer.h"
+
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -16,7 +18,19 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
+    Basket *basket1 = new Basket(5, 5);
+    Basket *basket2 = new Basket(7, 3);
+    Performer *performer = new Performer;
+    engine.rootContext()->setContextProperty("basket1", basket1);
+    engine.rootContext()->setContextProperty("basket2", basket2);
+    engine.rootContext()->setContextProperty("performer", performer);
+
     engine.load(url);
 
-    return app.exec();
+    int rc = app.exec();
+
+    delete basket1;
+    delete basket2;
+    delete performer;
+    return rc;
 }

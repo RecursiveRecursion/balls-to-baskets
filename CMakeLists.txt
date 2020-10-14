@@ -30,11 +30,19 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 if(ANDROID)
     add_library(QtTemp SHARED
       main.cpp
+      basket.cpp
+      basket.h
+      performer.cpp
+      performer.h
       qml.qrc
     )
 else()
     add_executable(QtTemp
       main.cpp
+      basket.cpp
+      basket.h
+      performer.cpp
+      performer.h
       qml.qrc
     )
 endif()
