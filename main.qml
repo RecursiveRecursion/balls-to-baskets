@@ -12,16 +12,17 @@ Window {
     minimumHeight: screen.desktopAvailableHeight / 1.2
     visible: true
     title: qsTr("Balls To Baskets")
+    property double twoBlueChance: performer.twoBlueChance
+    property double twoRedChance: performer.twoRedChance
+    property double blueRedChance: performer.blueRedChance
 
     GroupBox {
         id: basketBox1
         title: qsTr("Корзина 1")
-        property double blueChance:
-            basket1.totalBalls > 0
-            ? (basket1.blueBalls / basket1.totalBalls * 100).toFixed(2) : 0
-        property double redChance:
-            basket1.totalBalls > 0
-            ? (basket1.redBalls / basket1.totalBalls * 100).toFixed(2) : 0
+        property double blueChance: basket1.totalBalls > 0
+                                    ? (basket1.blueBalls / basket1.totalBalls * 100).toFixed(2) : 0
+        property double redChance: basket1.totalBalls > 0
+                                   ? (basket1.redBalls / basket1.totalBalls * 100).toFixed(2) : 0
 
         anchors.left: parent.left
         anchors.right: parent.horizontalCenter
@@ -56,6 +57,10 @@ Window {
                     basket2.redBallsChanged();
                     basket2.totalBallsChanged();
                     basket2.lastActionChanged();
+
+                    performer.twoBlueChanceChanged();
+                    performer.twoRedChanceChanged();
+                    performer.blueRedChanceChanged();
                 }
             }
         }
@@ -64,12 +69,10 @@ Window {
     GroupBox {
         id: basketBox2
         title: qsTr("Корзина 2")
-        property double blueChance:
-            basket2.totalBalls > 0
-            ? (basket2.blueBalls / basket2.totalBalls * 100).toFixed(2) : 0
-        property double redChance:
-            basket2.totalBalls > 0
-            ? (basket2.redBalls / basket2.totalBalls * 100).toFixed(2) : 0
+        property double blueChance: basket2.totalBalls > 0
+                                    ? (basket2.blueBalls / basket2.totalBalls * 100).toFixed(2) : 0
+        property double redChance: basket2.totalBalls > 0
+                                   ? (basket2.redBalls / basket2.totalBalls * 100).toFixed(2) : 0
 
         anchors.left: parent.horizontalCenter
         anchors.right: parent.right
@@ -104,6 +107,10 @@ Window {
                     basket1.redBallsChanged();
                     basket1.totalBallsChanged();
                     basket1.lastActionChanged();
+
+                    performer.twoBlueChanceChanged();
+                    performer.twoRedChanceChanged();
+                    performer.blueRedChanceChanged();
                 }
             }
         }
@@ -111,6 +118,9 @@ Window {
 
     GroupBox {
         id: bottomBox
+        property double twoBlueChance: performer.getTwoBlueChance().toFixed(2)
+        property double twoRedChance: performer.getTwoRedChance().toFixed(2)
+        property double blueRedChance: performer.getBlueRedChance().toFixed(2)
 
         anchors.left: basketBox1.horizontalCenter
         anchors.right: basketBox2.horizontalCenter
@@ -119,17 +129,33 @@ Window {
 
         ColumnLayout {
             anchors.fill: parent
-            Text { text: qsTr("Вероятность достать 2 синих шара: ") + "%" }
-            Text { text: qsTr("Вероятность достать 2 красных шара: ") + "%" }
-            Text { text: qsTr("Вероятность достать 1 красный и 1 синий шары: ") + "%" }
-            Text { text: qsTr("Последнее действие: ") }
+            Text { text: qsTr("Вероятность достать 2 синих шара: ")
+                         + mainWnd.twoBlueChance.toFixed(2) + "%" }
+            Text { text: qsTr("Вероятность достать 2 красных шара: ")
+                         + mainWnd.twoRedChance.toFixed(2) + "%" }
+            Text { text: qsTr("Вероятность достать 1 красный и 1 синий шары: ")
+                         + mainWnd.blueRedChance.toFixed(2) + "%" }
             Button {
                 text: "Извлечь 2 шара из случайной корзины"
                 Layout.topMargin: 10
                 Layout.preferredHeight: 25
                 Layout.alignment: Qt.AlignCenter
                 onClicked: {
+                    performer.extractBall(basket1, basket2, 2);
 
+                    basket1.blueBallsChanged();
+                    basket1.redBallsChanged();
+                    basket1.totalBallsChanged();
+                    basket1.lastActionChanged();
+
+                    basket2.blueBallsChanged();
+                    basket2.redBallsChanged();
+                    basket2.totalBallsChanged();
+                    basket2.lastActionChanged();
+
+                    performer.twoBlueChanceChanged();
+                    performer.twoRedChanceChanged();
+                    performer.blueRedChanceChanged();
                 }
             }
         }

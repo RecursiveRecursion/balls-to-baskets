@@ -18,9 +18,9 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
-    Basket *basket1 = new Basket(5, 5);
-    Basket *basket2 = new Basket(7, 3);
-    Performer *performer = new Performer;
+    Basket *basket1 = new Basket(7, 3);  // set amount of balls for basket1 here
+    Basket *basket2 = new Basket(9, 6);  // set amount of balls for basket1 here
+    Performer *performer = new Performer(basket1, basket2);
     engine.rootContext()->setContextProperty("basket1", basket1);
     engine.rootContext()->setContextProperty("basket2", basket2);
     engine.rootContext()->setContextProperty("performer", performer);
@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
 
     int rc = app.exec();
 
+    delete performer;
     delete basket1;
     delete basket2;
-    delete performer;
     return rc;
 }
