@@ -2,7 +2,6 @@
 #define BASKET_H
 
 #include <QObject>
-#include <QString>
 
 class Basket : public QObject
 {
@@ -10,7 +9,6 @@ class Basket : public QObject
     Q_PROPERTY(int blueBalls MEMBER m_blueBalls NOTIFY blueBallsChanged)
     Q_PROPERTY(int redBalls MEMBER m_redBalls NOTIFY redBallsChanged)
     Q_PROPERTY(int totalBalls MEMBER m_totalBalls NOTIFY totalBallsChanged)
-    Q_PROPERTY(QString lastAction MEMBER m_lastAction NOTIFY lastActionChanged)
 
 public:
     Basket(int blueBalls, int redBalls);
@@ -32,13 +30,11 @@ signals:
     void blueBallsChanged();
     void redBallsChanged();
     void totalBallsChanged();
-    void lastActionChanged();
 
 private:
     int m_blueBalls;
     int m_redBalls;
     int m_totalBalls;
-    QString m_lastAction;
 };
 
 #endif // BASKET_H

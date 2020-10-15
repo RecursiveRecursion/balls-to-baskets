@@ -19,6 +19,7 @@ Window {
     GroupBox {
         id: basketBox1
         title: qsTr("Корзина 1")
+        property string action
         property double blueChance: basket1.totalBalls > 0
                                     ? (basket1.blueBalls / basket1.totalBalls * 100).toFixed(2) : 0
         property double redChance: basket1.totalBalls > 0
@@ -39,24 +40,22 @@ Window {
                          + basketBox1.blueChance + "%" }
             Text { text: qsTr("Вероятность достать красный шар: ")
                          + basketBox1.redChance + "%" }
-            Text { text: qsTr("Последнее действие: ") + basket1.lastAction }
+            Text { text: qsTr("Последнее действие: ") + basketBox1.action }
             Button {
                 text: "Переложить шар в корзину 2"
                 Layout.topMargin: 10
                 Layout.preferredHeight: 25
                 Layout.alignment: Qt.AlignCenter
                 onClicked: {
-                    performer.shiftBall(basket1, basket2);
+                    basketBox1.action = performer.shiftBall(basket1, basket2);
 
                     basket1.blueBallsChanged();
                     basket1.redBallsChanged();
                     basket1.totalBallsChanged();
-                    basket1.lastActionChanged();
 
                     basket2.blueBallsChanged();
                     basket2.redBallsChanged();
                     basket2.totalBallsChanged();
-                    basket2.lastActionChanged();
 
                     performer.twoBlueChanceChanged();
                     performer.twoRedChanceChanged();
@@ -69,6 +68,7 @@ Window {
     GroupBox {
         id: basketBox2
         title: qsTr("Корзина 2")
+        property string action
         property double blueChance: basket2.totalBalls > 0
                                     ? (basket2.blueBalls / basket2.totalBalls * 100).toFixed(2) : 0
         property double redChance: basket2.totalBalls > 0
@@ -89,24 +89,22 @@ Window {
                          + basketBox2.blueChance + "%" }
             Text { text: qsTr("Вероятность достать красный шар: ")
                          + basketBox2.redChance + "%" }
-            Text { text: qsTr("Последнее действие: ") + basket2.lastAction }
+            Text { text: qsTr("Последнее действие: ") + basketBox2.action }
             Button {
                 text: "Переложить шар в корзину 1"
                 Layout.topMargin: 10
                 Layout.preferredHeight: 25
                 Layout.alignment: Qt.AlignCenter
                 onClicked: {
-                    performer.shiftBall(basket2, basket1);
+                    basketBox2.action = performer.shiftBall(basket2, basket1);
 
                     basket2.blueBallsChanged();
                     basket2.redBallsChanged();
                     basket2.totalBallsChanged();
-                    basket2.lastActionChanged();
 
                     basket1.blueBallsChanged();
                     basket1.redBallsChanged();
                     basket1.totalBallsChanged();
-                    basket1.lastActionChanged();
 
                     performer.twoBlueChanceChanged();
                     performer.twoRedChanceChanged();
@@ -118,9 +116,7 @@ Window {
 
     GroupBox {
         id: bottomBox
-        property double twoBlueChance: performer.getTwoBlueChance().toFixed(2)
-        property double twoRedChance: performer.getTwoRedChance().toFixed(2)
-        property double blueRedChance: performer.getBlueRedChance().toFixed(2)
+        property string action
 
         anchors.left: basketBox1.horizontalCenter
         anchors.right: basketBox2.horizontalCenter
@@ -135,23 +131,23 @@ Window {
                          + mainWnd.twoRedChance.toFixed(2) + "%" }
             Text { text: qsTr("Вероятность достать 1 красный и 1 синий шары: ")
                          + mainWnd.blueRedChance.toFixed(2) + "%" }
+            Text { text: qsTr("Последнее действие: ")
+                         + bottomBox.action }
             Button {
                 text: "Извлечь 2 шара из случайной корзины"
                 Layout.topMargin: 10
                 Layout.preferredHeight: 25
                 Layout.alignment: Qt.AlignCenter
                 onClicked: {
-                    performer.extractBall(basket1, basket2, 2);
+                    bottomBox.action = performer.extractBall(basket1, basket2, 2);
 
                     basket1.blueBallsChanged();
                     basket1.redBallsChanged();
                     basket1.totalBallsChanged();
-                    basket1.lastActionChanged();
 
                     basket2.blueBallsChanged();
                     basket2.redBallsChanged();
                     basket2.totalBallsChanged();
-                    basket2.lastActionChanged();
 
                     performer.twoBlueChanceChanged();
                     performer.twoRedChanceChanged();

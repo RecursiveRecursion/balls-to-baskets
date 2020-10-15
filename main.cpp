@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
 
     Basket *basket1 = new Basket(7, 3);  // set amount of balls for basket1 here
-    Basket *basket2 = new Basket(9, 6);  // set amount of balls for basket1 here
+    Basket *basket2 = new Basket(9, 6);  // set amount of balls for basket2 here
     Performer *performer = new Performer(basket1, basket2);
     engine.rootContext()->setContextProperty("basket1", basket1);
     engine.rootContext()->setContextProperty("basket2", basket2);
