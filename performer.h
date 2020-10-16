@@ -24,15 +24,11 @@ public:
     Q_INVOKABLE QString shiftBall(Basket *basketFrom, Basket *basketTo);
     Q_INVOKABLE QString extractBall(Basket *basketX, Basket *basketY, int ballsToExtract);
 
-    void calculateChance(Basket *basket, double *blueChance, double *redChance); // last 2 args are output
+    double calculateChance(int balls, int totalBalls);
     void calculateTwoBlueChance(Basket *basketX, Basket *basketY);
     void calculateTwoRedChance(Basket *basketX, Basket *basketY);
     void calculateBlueRedChance();
 
-    Q_INVOKABLE double getBlueChanceX();
-    Q_INVOKABLE double getRedChanceX();
-    Q_INVOKABLE double getBlueChanceY();
-    Q_INVOKABLE double getRedChanceY();
     Q_INVOKABLE double getTwoBlueChance();
     Q_INVOKABLE double getTwoRedChance();
     Q_INVOKABLE double getBlueRedChance();
@@ -43,11 +39,7 @@ signals:
     void blueRedChanceChanged();
 
 private:
-    double m_blueChanceX;
-    double m_redChanceX;
-    double m_blueChanceY;
-    double m_redChanceY;
-    double m_basketChance; // 3 options: 1 blue and 1 red || 2 blue || 2 red -> (1.0 / 3.0)
+    const double m_actionChance; // 3 options: 1 blue and 1 red || 2 blue || 2 red -> (1.0 / 3.0)
     double m_twoBlueChance;
     double m_twoRedChance;
     double m_blueRedChance;
